@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>微软完成MAI-Base-2预训练：800亿激活参数、总参数2.8万亿 — 头版 · THE FRONT PAGE</title>
+<style>
+:root{--paper:#f6f6f4;--ink:#191919;--sub:#4a4a4a;--muted:#8a8a8a;--line:#e2e1dd;
+--serif:"Songti SC","STSong","Noto Serif SC",serif;--sans:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:700px;margin:0 auto;padding:0 22px 60px}
+.mast{padding:26px 0 18px;border-bottom:3px double var(--ink);margin-bottom:26px}
+.mast a{color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:.3em;font-weight:700}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--muted);margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:900;font-size:30px;line-height:1.45;letter-spacing:.02em;margin-bottom:16px}
+.byline{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--muted);margin-bottom:22px}
+.lede{font-family:var(--serif);font-size:17px;line-height:1.9;color:var(--sub);border-left:3px solid var(--ink);padding-left:16px;margin-bottom:26px}
+figure.ph{margin:0 0 28px}
+figure.ph img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(1) contrast(1.04)}
+article p{font-family:var(--serif);font-size:16.5px;line-height:2;margin-bottom:1.1em;text-align:justify}
+article p strong{font-weight:700}
+.srcbox{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:2}
+.srcbox a{color:var(--ink)}
+.back{margin-top:34px}
+.back a{display:inline-block;border:1px solid var(--ink);color:var(--ink);text-decoration:none;
+font-family:var(--mono);font-size:12px;letter-spacing:.3em;padding:13px 26px 13px 34px}
+.back a:hover{background:var(--ink);color:#fff}
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
+font-size:11px;color:var(--muted);letter-spacing:.1em;line-height:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast"><a href="/?enter=1">头版 · THE FRONT PAGE</a></header>
+  <div class="kicker">AI产业 · FULL STORY</div>
+  <h1>微软完成MAI-Base-2预训练：800亿激活参数、总参数2.8万亿</h1>
+  <div class="byline">微软 · 2026-10-15 · 头版编译</div>
+  <p class="lede">微软人工智能10月15日说，新的混合专家基础模型MAI-Base-2已经完成预训练。它有800亿激活参数、总参数2.8万亿。在微软自己的留出评测上，它优于所测试的每一个开源权重模型，并且预训练算力效率比DeepSeek-V4-Pro-Base高出4到12倍。</p>
+  <article>
+<p>微软人工智能在10月15日的文章里写道，公司6月发布过MAI-Thinking-1，那是在MAI-Base-1之上做后训练的通用基础模型。现在，新的前沿模型MAI-Base-2已经完成预训练。它是混合专家模型，激活参数800亿，总参数2.8万亿。</p>
+<p>文章说，MAI-Base-2在微软测试过的留出评测上，优于每一个开源权重模型。它的预训练浮点运算效率，比最强的开源权重基座模型DeepSeek-V4-Pro-Base高出4到12倍；文中按四项留出评测分别拟合后给出的区间是4.2到12.3倍。与6月发布的MAI-Base-1相比，算力效率提高了6.3到12.7倍。微软说，省下来的算力被用来训练一个更大的模型。</p>
+<p>微软强调，预训练建立在自有数据上，不从其他模型蒸馏，进入模型的训练词元有清晰来源。文章说，这将使微软能够通过Foundry把模型权重授权给受信任的合作伙伴。MAI-Base-2目前正在做后训练。</p>
+<p>训练用了1.6万块GB200图形处理器，2026年8月到9月共38天。全程平均模型浮点运算利用率21%，训练向前推进的时间比例即goodput为89%。利用率按GB200在BF16下的理论峰值每秒2.5千万亿次浮点运算归一，并且不含重计算和优化器的运算。比较用的是留出文本上的每字节比特数，以免受分词器差异影响。</p>
+<p>对照的前沿检查点截止到2026年10月之前。DeepSeek-V4-Pro-Base被写成能力最强、且公开权重的基座模型。Kimi K3、Qwen3.8-2.4T-A95B和MiMo-V2.6-Pro-RL能力很强，但能拿到的只有后训练检查点，文章注明后训练可能影响这些评测。在这些留出评测上，MAI-Base-2的每字节比特数低于所测试的其他模型。</p>
+<p>文章用“源缩放”解释较小规模上的多轮训练：如果一份数据在完整的50万亿词元运行里重复8次，那么一次5万亿词元的运行就会在其中十分之一的数据上循环8次。与MAI-Base-1不同，MAI-Base-2用无编码器的视觉语言模型架构原生预训练。视觉语料有4.5万亿不重复词元；计入重复后，视觉数据占这50万亿词元训练混合物的18%。网络数据的知识截止到2026年3月。语料相对MAI-Base-1大约增长36%，按不重复训练词元计。</p>
+<p>文章还写到，网页数据使用遵守robots.txt及相关标记的自有爬虫，并排除违反微软负责任人工智能政策、或出现在美国贸易代表办公室“恶名市场”名单上的来源。MAI-Base-2进入后训练的同时，MAI-Base-3的准备工作已经开始。</p>
+  </article>
+  <div class="srcbox">原文来源：<a href="https://microsoft.ai/news/frontier-pre-training-at-microsoft-ai/" target="_blank" rel="noopener">微软 ↗</a><br>本页为头版基于原文的编译整理，关键事实与引文均来自原文；个别细节以原文为准。</div>
+  <div class="back"><a href="/?enter=1#ai">← 返回头版</a></div>
+  <footer>© 2026 头版 · 内容来自公开网络来源，仅供参考</footer>
+</div>
+</body>
+</html>

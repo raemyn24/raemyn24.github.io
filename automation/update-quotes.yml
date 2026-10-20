@@ -1,0 +1,40 @@
+name: Update market quotes
+
+# The front page races live quote APIs in the browser first; the three
+# *-quotes.json files in the repo root are the fallback snapshot.
+# This keeps that fallback fresh. Every 30 minutes (not 10 like the old
+# bot) to keep commit noise and Pages rebuilds sane.
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-quotes
+  cancel-in-progress: false
+
+jobs:
+  quotes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch quotes
+        run: python3 scripts/update_quotes.py
+
+      - name: Commit refreshed fallbacks
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update market quotes (crypto+cm+us)"
+          file_pattern: "crypto-quotes.json common-quotes.json us-quotes.json"
+          commit_user_name: "raemyn24-bot"
+          commit_user_email: "342075056+raemyn24-bot@users.noreply.github.com"
+          commit_author: "raemyn24-bot <342075056+raemyn24-bot@users.noreply.github.com>"

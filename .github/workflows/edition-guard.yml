@@ -1,0 +1,51 @@
+name: Daily edition guard
+
+# The front page promises a new edition every day at 06:00 CST.
+# This guard checks twice a day (07:20 and 12:30 Asia/Shanghai) that
+# today's edition actually shipped: articles/<today>/ must exist and
+# index.html must carry today's date. If not, it opens one alert issue
+# (never a duplicate) and fails the run so the miss is visible.
+
+on:
+  schedule:
+    - cron: "20 23 * * *"   # 07:20 Asia/Shanghai
+    - cron: "30 4 * * *"    # 12:30 Asia/Shanghai
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check today's edition
+        id: check
+        run: |
+          TODAY=$(TZ=Asia/Shanghai date +%F)
+          echo "today=$TODAY" >> "$GITHUB_OUTPUT"
+          if [ -d "articles/$TODAY" ] && grep -q "$TODAY" index.html; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            echo "Edition $TODAY is live."
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::error::Edition $TODAY is missing."
+          fi
+
+      - name: Open alert issue if missing
+        if: steps.check.outputs.ok == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TODAY: ${{ steps.check.outputs.today }}
+        run: |
+          TITLE="头版缺刊告警 $TODAY"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number --jq 'length')
+          if [ "$EXISTING" = "0" ]; then
+            gh issue create --title "$TITLE" --body "巡刊守卫在 $(TZ=Asia/Shanghai date '+%F %H:%M') CST 检查时，今天的头版还没有发布：articles/$TODAY 不存在，或 index.html 里没有今天的日期。请尽快补刊，或确认今天休刊。 @raemyn24"
+          else
+            echo "Alert issue already open, not duplicating."
+          fi
+          exit 1

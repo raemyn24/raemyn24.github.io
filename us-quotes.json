@@ -1,66 +1,66 @@
 {
-  "updated_utc": "2026-10-22T12:12:07Z",
-  "updated_et": "美东 10-22 08:12",
+  "updated_utc": "2026-10-22T17:26:34Z",
+  "updated_et": "美东 10-22 13:26",
   "quotes": [
     {
       "symbol": "NVDA",
-      "price": 221.97,
-      "chg": 2.54
+      "price": 212.98,
+      "chg": -4.05
     },
     {
       "symbol": "AAPL",
-      "price": 343.99,
-      "chg": 1.32
+      "price": 345.98,
+      "chg": 0.58
     },
     {
       "symbol": "MSFT",
-      "price": 532.95,
-      "chg": 0.2
+      "price": 523.81,
+      "chg": -1.71
     },
     {
       "symbol": "AVGO",
-      "price": 337.8,
-      "chg": 1.03
+      "price": 324.53,
+      "chg": -3.93
     },
     {
       "symbol": "AMD",
-      "price": 552.72,
-      "chg": 3.36
+      "price": 509.33,
+      "chg": -7.85
     },
     {
       "symbol": "TSM",
-      "price": 431.89,
-      "chg": 1.6
+      "price": 411.47,
+      "chg": -4.73
     },
     {
       "symbol": "MU",
-      "price": 913.67,
-      "chg": 1.96
+      "price": 861.705,
+      "chg": -5.69
     },
     {
       "symbol": "INTC",
-      "price": 92.96,
-      "chg": 1.39
+      "price": 85.995,
+      "chg": -7.49
     },
     {
       "symbol": "META",
-      "price": 697.52,
-      "chg": 0.47
+      "price": 647.6,
+      "chg": -7.16
     },
     {
       "symbol": "GOOGL",
-      "price": 334.76,
-      "chg": -1.62
+      "price": 326.55,
+      "chg": -2.45
     },
     {
       "symbol": "AMZN",
-      "price": 262.37,
-      "chg": -0.1
+      "price": 250.69,
+      "chg": -4.45
     },
     {
       "symbol": "ARM",
-      "price": 226.59,
-      "chg": 2.5
+      "price": 211.28,
+      "chg": -6.76
     }
   ]
 }

@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="color-scheme" content="light dark" />
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAoElEQVR4nGNgwAP+z5f5/3++zH98apjwSRID4AYQYxs2dRguQJZkTHzCyJj4hBGbHE7T4eyTNv+RMS5DGBmwgP8vVyAUPZiCUGx+BEM9pheQbGNgYGBgUMjBLcfAwMCC7mdsLsKwBF8gMjAwoDgbhY0FYNiIzZkoGtDCAcMF2AIKnxyKATC/YVMIE8MZjcQEJjY1mF5AS3nkxBKKjTTPjQDlW2L5nIji8gAAAABJRU5ErkJggg==" />
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAB/ElEQVR4nO3cwY0TMRiA0QRRSA4UxIFS2CqgFA4UxCGdhAp2fTDmz+733jVKMhp9smR7xpcLAAAAUHGdvoDTHj8vj53vX79/7Hv0afoCmCWAOAHECSBOAHECiBNA3OfdH1jNsz/6PPq00/fXCBAngDgBxAkgTgBxAogTQNz2OsBqHjq+TvDltvkD939wEa+bvj9GgDgBxAkgTgBxAogTQJwA4sb36nfnwY/ft63n/nddv96fex1kwQgQJ4A4AcQJIE4AcQKIE0Dc+DrAyvQ8f9dqnWCaESBOAHECiBNAnADiBBAngLjtOep738+fNv08gREgTgBxAogTQJwA4gQQJ4C443vV9Xn+rtPPExgB4gQQJ4A4AcQJIE4AcQKI2z4n8LQfv+5vfv7y7fZfruM1z359K0aAOAHECSBOAHECiBNAnADivBcwzHsBjBJAnADiBBAngDgBxAkg7qnPsLtc9tcJVvv1K7v7+c4J5KkJIE4AcQKIE0CcAOIEEDc+R33vzxNM7+fvMgLECSBOAHECiBNAnADiBBB3/pzA4Xnw7jrB6f386ftjBIgTQJwA4gQQJ4A4AcQJIG77nMDpeezSn/vo368sn3dwPgAnCSBOAHECiBNAnADiBBA3/l7Aaat59Mr4OsZhRoA4AcQJIE4AcQKIE0CcAAAAAAAi/gLJVmOrn8sQhwAAAABJRU5ErkJggg==" />
 <title>杭州每日天气</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -248,9 +248,9 @@
 
   <!-- top -->
   <div class="toprow rise d1">
-    <div class="place display">杭州<small>10月22日 · 星期四 · 浙江</small></div>
+    <div class="place display">杭州<small id="placeDate">10月22日 · 星期四 · 浙江</small></div>
     <div class="spacer"></div>
-    <span class="chip"><span class="dot"></span>数据更新于 10:15</span>
+    <span class="chip"><span class="dot"></span><span id="nowClockText">数据更新于 10:15</span></span>
     <span class="chip aqi"><span class="dot"></span>AQI 104 · 对敏感人群不太友好</span>
   </div>
 
@@ -274,11 +274,11 @@
       </g>
     </svg>
     <div class="hero-grid">
-      <div class="big-temp"><span class="t num">19</span><span class="deg">°C</span></div>
+      <div class="big-temp"><span class="t num" id="heroTemp">19</span><span class="deg">°C</span></div>
       <div class="hero-side">
         <div class="cond">多云间晴，太阳时不时露脸</div>
-        <span class="feel">体感 18° · 比温度计诚实 1 度</span>
-        <div class="hilo">今日 <b class="num">13° – 21°</b> · 东北风 <span class="num">11 km/h</span> · 湿度 <span class="num">59%</span></div>
+        <span class="feel" id="heroFeel">体感 18° · 比温度计诚实 1 度</span>
+        <div class="hilo">今日 <b class="num">13° – 21°</b> · 东北风 <span class="num" id="heroWind">11 km/h</span> · 湿度 <span class="num" id="heroHum">59%</span></div>
       </div>
     </div>
     <p class="verdict">今天老天爷心情稳定：<span class="hl">全天降雨概率 0%</span>，伞可以放假一天。</p>
@@ -379,7 +379,7 @@
 
   <footer>
     数据：Open-Meteo 预报与空气质量接口 · 杭州（30.26°N, 120.14°E）· 快照时间 2026-10-22 10:15<br/>
-    这是构建时抓取的静态快照，天气说变就变，出门前再瞄一眼实时预报更稳妥。
+    日期、「现在」标记与太阳位置按你打开页面时的本地时间现算；逐小时数值仍来自上方快照。
   </footer>
 </div>
 
@@ -424,7 +424,48 @@
       ]
     }
   };
-  var NOW_HOUR = 10; /* snapshot hour */
+  /* ---- live local time, computed in the browser on every open / tick ---- */
+  var WEEK_CN = ["日", "一", "二", "三", "四", "五", "六"];
+  function pad2(n){ return (n < 10 ? "0" : "") + n; }
+  function liveNow(){ return new Date(); }
+  var NOW = liveNow();
+  var NOW_HOUR = NOW.getHours();
+  var NOW_MIN = NOW.getMinutes();
+  var NOW_FRAC = NOW_HOUR + NOW_MIN / 60; /* precise position of the "现在" marker */
+  function dateLabel(d){
+    return (d.getMonth() + 1) + "月" + d.getDate() + "日 周" + WEEK_CN[d.getDay()];
+  }
+  /* relabel the two baked days from the real calendar date, not the build date */
+  var calToday = new Date(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
+  var calTomorrow = new Date(calToday.getTime() + 24 * 60 * 60 * 1000);
+  DAYS.today.label = "今天 · " + dateLabel(calToday);
+  DAYS.tomorrow.label = "明天 · " + dateLabel(calTomorrow);
+
+  var placeDateEl = document.getElementById("placeDate");
+  var nowClockEl = document.getElementById("nowClockText");
+  function paintClock(){
+    var n = liveNow();
+    NOW = n; NOW_HOUR = n.getHours(); NOW_MIN = n.getMinutes(); NOW_FRAC = NOW_HOUR + NOW_MIN / 60;
+    if (placeDateEl) {
+      placeDateEl.textContent = (n.getMonth() + 1) + "月" + n.getDate() + "日 · 星期" + WEEK_CN[n.getDay()] + " · 浙江";
+    }
+    if (nowClockEl) {
+      nowClockEl.textContent = "现在 " + pad2(NOW_HOUR) + ":" + pad2(NOW_MIN) + " · 数据快照 10:15";
+    }
+    var ht = document.getElementById("heroTemp");
+    var hf = document.getElementById("heroFeel");
+    var hw = document.getElementById("heroWind");
+    var hh = document.getElementById("heroHum");
+    if (ht) ht.textContent = Math.round(DAYS.today.temp[NOW_HOUR]);
+    if (hf) {
+      var diff = Math.round(DAYS.today.temp[NOW_HOUR] - DAYS.today.feel[NOW_HOUR]);
+      hf.textContent = "体感 " + Math.round(DAYS.today.feel[NOW_HOUR]) + "°" +
+        (diff > 0 ? " · 比温度计诚实 " + diff + " 度" : diff < 0 ? " · 比温度计高 " + (-diff) + " 度" : " · 跟温度计一个数");
+    }
+    if (hw) hw.textContent = Math.round(DAYS.today.wind[NOW_HOUR]) + " km/h";
+    if (hh) hh.textContent = DAYS.today.hum[NOW_HOUR] + "%";
+  }
+  paintClock();
 
   /* ---- ticker ---- */
   var tickerItems = [
@@ -462,6 +503,7 @@
   var momentsBox = document.getElementById("moments");
   var currentDay = "today";
   var selHour = NOW_HOUR;
+  var userPicked = false; /* true once the reader taps an hour themselves */
 
   function fmt(n, d){ return n.toFixed(d == null ? 0 : d); }
 
@@ -511,10 +553,13 @@
     if (d.rainMax === 0) {
       s += '<text class="dry-note" x="' + (PL + plotW / 2) + '" y="' + (rainTop + barZone / 2 + 16) + '" text-anchor="middle">全天 0% · 一根雨柱都没有，放心</text>';
     }
-    /* now marker */
+    /* now marker — position computed live from the viewer's clock */
     if (dayKey === "today") {
-      s += '<line class="now-line" x1="' + X(NOW_HOUR) + '" y1="' + PT + '" x2="' + X(NOW_HOUR) + '" y2="' + baseY + '"/>';
-      s += '<text x="' + X(NOW_HOUR) + '" y="' + (PT - 8) + '" text-anchor="middle" fill="#e8930c" font-weight="700">现在</text>';
+      var nx = X(Math.min(NOW_FRAC, 23));
+      var anchor = NOW_FRAC < 2 ? "start" : (NOW_FRAC > 21 ? "end" : "middle");
+      var tx = NOW_FRAC < 2 ? nx + 4 : (NOW_FRAC > 21 ? nx - 4 : nx);
+      s += '<line class="now-line" x1="' + nx + '" y1="' + PT + '" x2="' + nx + '" y2="' + baseY + '"/>';
+      s += '<text x="' + tx + '" y="' + (PT - 8) + '" text-anchor="' + anchor + '" fill="#e8930c" font-weight="700">现在 ' + pad2(NOW_HOUR) + ':' + pad2(NOW_MIN) + '</text>';
     }
     /* lines */
     function path(key){
@@ -556,6 +601,7 @@
     for (var k = 0; k < hits.length; k++) {
       hits[k].addEventListener("click", function(){
         selHour = parseInt(this.getAttribute("data-h"), 10);
+        userPicked = true;
         render(currentDay, false);
       });
     }
@@ -584,6 +630,7 @@
   var btnM = document.getElementById("btnTomorrow");
   function setDay(key){
     currentDay = key;
+    userPicked = false;
     selHour = key === "today" ? NOW_HOUR : 17;
     btnT.setAttribute("aria-pressed", key === "today" ? "true" : "false");
     btnM.setAttribute("aria-pressed", key === "tomorrow" ? "true" : "false");
@@ -594,14 +641,17 @@
 
   render("today", true);
 
-  /* ---- sun position (10:15 between 06:06 and 17:21 ≈ 37%) ---- */
+  /* ---- sun position: live fraction of daylight elapsed (sunrise 06:06, sunset 17:21) ---- */
   var arc = document.getElementById("sunArc");
   var dot = document.getElementById("sunDot");
   if (arc && dot && arc.getPointAtLength) {
     var total = arc.getTotalLength();
     arc.style.strokeDasharray = total;
     arc.style.strokeDashoffset = total;
-    var frac = 0.37;
+    var nowMins = NOW_HOUR * 60 + NOW_MIN;
+    var frac = (nowMins - (6 * 60 + 6)) / ((17 * 60 + 21) - (6 * 60 + 6));
+    if (frac < 0) frac = 0;
+    if (frac > 1) frac = 1;
     var pt = arc.getPointAtLength(total * frac);
     dot.setAttribute("cx", pt.x); dot.setAttribute("cy", pt.y);
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -611,6 +661,32 @@
       arc.style.strokeDashoffset = total * (1 - frac);
     }
   }
+
+  /* ---- keep the clock-derived bits fresh while the page stays open ---- */
+  var lastMin = NOW_MIN, lastHour = NOW_HOUR;
+  setInterval(function(){
+    paintClock();
+    if (NOW_MIN !== lastMin) {
+      var hourChanged = NOW_HOUR !== lastHour;
+      lastMin = NOW_MIN; lastHour = NOW_HOUR;
+      if (hourChanged && !userPicked && currentDay === "today") {
+        selHour = NOW_HOUR; /* follow the clock unless the reader picked an hour */
+      }
+      if (currentDay === "today") render("today", false);
+      /* move the sun dot to the new live position */
+      if (arc && dot && arc.getPointAtLength) {
+        var t2 = arc.getTotalLength();
+        var nm = NOW_HOUR * 60 + NOW_MIN;
+        var f2 = (nm - 366) / (1041 - 366);
+        if (f2 < 0) f2 = 0;
+        if (f2 > 1) f2 = 1;
+        var p2 = arc.getPointAtLength(t2 * f2);
+        dot.setAttribute("cx", p2.x); dot.setAttribute("cy", p2.y);
+        arc.style.transition = "none";
+        arc.style.strokeDashoffset = t2 * (1 - f2);
+      }
+    }
+  }, 30000);
 })();
 </script>
 </body>

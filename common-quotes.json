@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-11-01T10:56:40Z",
-  "updated_et": "美东 11-01 05:56",
+  "updated_utc": "2026-11-01T16:59:21Z",
+  "updated_et": "美东 11-01 11:59",
   "quotes": [
     {
       "symbol": "XAU",
@@ -19,8 +19,8 @@
     },
     {
       "symbol": "USDCNY",
-      "price": 6.654,
-      "chg": -0.11
+      "price": 6.6449,
+      "chg": -0.24
     }
   ]
 }

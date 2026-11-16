@@ -1,31 +1,31 @@
 {
-  "updated_utc": "2026-11-16T00:06:24Z",
-  "updated_et": "美东 11-15 19:06",
+  "updated_utc": "2026-11-16T06:58:35Z",
+  "updated_et": "美东 11-16 01:58",
   "quotes": [
     {
       "symbol": "BTC",
-      "price": 65250.0,
-      "chg": 2.04
+      "price": 64756.4,
+      "chg": 0.42
     },
     {
       "symbol": "ETH",
-      "price": 1833.07,
-      "chg": 3.91
+      "price": 1818.53,
+      "chg": 1.4
     },
     {
       "symbol": "SOL",
-      "price": 72.57,
-      "chg": 3.57
+      "price": 71.35,
+      "chg": 1.25
     },
     {
       "symbol": "XRP",
-      "price": 0.9714,
-      "chg": 6.09
+      "price": 0.9567,
+      "chg": -0.25
     },
     {
       "symbol": "DOGE",
-      "price": 0.05976,
-      "chg": 4.6
+      "price": 0.05898,
+      "chg": 1.88
     }
   ]
 }

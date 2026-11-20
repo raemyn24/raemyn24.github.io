@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-11-19T22:32:07Z",
-  "updated_et": "美东 11-19 17:32",
+  "updated_utc": "2026-11-20T03:49:23Z",
+  "updated_et": "美东 11-19 22:49",
   "quotes": [
     {
       "symbol": "NVDA",
@@ -45,7 +45,7 @@
     {
       "symbol": "META",
       "price": 596.22,
-      "chg": -3.27
+      "chg": -3.66
     },
     {
       "symbol": "GOOGL",
@@ -60,7 +60,7 @@
     {
       "symbol": "ARM",
       "price": 177.17,
-      "chg": -3.06
+      "chg": -3.39
     }
   ]
 }
